@@ -88,12 +88,12 @@ export class AppComponent {
     let ctrl = this.form.get(ctrlName);
     return (ctrl.touched || ctrl.dirty) && !ctrl.valid;
   }
-/**
- * @description Gather the data and add it to the list
- * @author Edison A.
- * @memberof AppComponent
- */
-onFormSubmit(): void {
+  /**
+   * @description Gather the data and add it to the list
+   * @author Edison A.
+   * @memberof AppComponent
+   */
+  onFormSubmit(): void {
     if (this.form.valid) {
       let item: LicenseData = new LicenseData(
         this.form.controls.license.value,
@@ -110,31 +110,32 @@ class LicenseData {
   license: string;
   date: string;
   time: string;
-/**
- * Creates an instance of LicenseData.
- * @author Edison A.
- * @param {string} license
- * @param {string} date
- * @param {string} time
- * @memberof LicenseData
- */
-constructor(license: string, date: string, time: string) {
+  /**
+   * Creates an instance of LicenseData.
+   * @author Edison A.
+   * @param {string} license
+   * @param {string} date
+   * @param {string} time
+   * @memberof LicenseData
+   */
+  constructor(license: string, date: string, time: string) {
     this.license = license;
     this.date = date;
     this.time = time;
     this.setCanCirculate();
   }
-/**
- * @description Checks if the current LicenseData item can circulate with the given parameters
- * @author Edison A.
- * @memberof LicenseData
- */
-setCanCirculate() {
+  /**
+   * @description Checks if the current LicenseData item can circulate with the given parameters
+   * @author Edison A.
+   * @memberof LicenseData
+   */
+  setCanCirculate() {
     /*
     Rules:
     taken from http://www.amt.gob.ec/index.php/servicios/hoy-no-circula.html
 
-    Time: from 5:00 to 20:00
+    Time: from 5:00 to 20:00, however, the requirement specifies the use of the old schedule
+    which is from 7:00am - 9:30am and from 16:00 to 19:30
     0: Sund: any
     1: Mond: 1 & 2
     2: Tues: 3 & 4
@@ -157,7 +158,8 @@ setCanCirculate() {
 
     this.canCirculate = false;
     if (
-      (weekDay === 0 || weekDay === 6 || timeInt < 500 || timeInt > 2000) ||
+      (weekDay === 0 || weekDay === 6 ||
+      timeInt < 700 || (timeInt > 930 && timeInt < 1600) || timeInt > 1930) ||
       (weekDay === 1 && (lastDigit === 1 || lastDigit === 2)) ||
       (weekDay === 2 && (lastDigit === 3 || lastDigit === 4)) ||
       (weekDay === 3 && (lastDigit === 5 || lastDigit === 6)) ||
