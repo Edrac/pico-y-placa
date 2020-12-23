@@ -3,23 +3,34 @@
     Predictor de pico y placa
   </div>
   <div class="card-body">
-    <form [formGroup]="form" (ngSubmit)="onFormSubmit()" class="column">
+    <form [formGroup]="form" (ngSubmit)="onFormSubmit()" class="column needs-validation">
 
       <div class="form-group">
         <!-- <label for="licenseId">Licencia</label> -->
-        <input type="text" class="form-control" formControlName="license" aria-describedby="Licencia" required id="licenseId" placeholder="aaa-999"/>
+        <input type="text" class="form-control" formControlName="license" aria-describedby="Licencia" required id="licenseId" placeholder="aaa-999" [class.is-invalid]="isInvalid('license')" />
+        <div class="invalid-feedback"
+          *ngIf="!form.controls.license.pristine && form.controls.license.status == 'INVALID'">
+          <p *ngIf="form.getError('required', 'license')"> *This field is required </p>
+          <p *ngIf="form.getError('minlength', 'license')"> *Invalid license </p>
+        </div>
       </div>
 
       <div class="form-group">
         <!-- <label for="dateId">Fecha</label> -->
         <input type="string" class="form-control" formControlName="date" required aria-describedby="Fecha" id="dateId"
-          placeholder="dd/mm/aa"/>
+          placeholder="dd/mm/aa" [class.is-invalid]="isInvalid('date')" />
+        <div class="invalid-feedback" *ngIf="!form.controls.date.pristine && form.controls.date.status == 'INVALID'">
+          <p *ngIf="form.getError('required', 'date')"> *This field is required </p>
+        </div>
       </div>
 
       <div class="form-group">
         <!-- <label for="timeId">Hora</label> -->
         <input type="text" class="form-control" formControlName="time" required aria-describedby="Hora" id="timeId"
-          placeholder="15:00"/>
+          placeholder="15:00" [class.is-invalid]="isInvalid('time')" />
+        <div class="invalid-feedback" *ngIf="!form.controls.time.pristine && form.controls.time.status == 'INVALID'">
+          <p *ngIf="form.getError('required', 'time')"> *This field is required </p>
+        </div>
       </div>
 
       <div class="">

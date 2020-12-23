@@ -28,6 +28,15 @@ export class AppComponent {
     });
   }
 
+  isInvalid(ctrlName: string): boolean {
+    console.log('evaluating if is invalid', this.form);
+    let ctrl = this.form.get(ctrlName);
+    return (ctrl.touched || ctrl.dirty) && !ctrl.valid;
+  }
+
   onFormSubmit(): void {
+    if (this.form.valid) {
+
+    }
   }
 }
