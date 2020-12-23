@@ -1,44 +1,55 @@
-<div class="card">
-  <div class="card-header">
-    Predictor de pico y placa
-  </div>
-  <div class="card-body">
-    <form [formGroup]="form" (ngSubmit)="onFormSubmit()" class="column needs-validation">
+<div class="container-fluid pt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-5 col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          Predictor de pico y placa
+        </div>
+        <div class="card-body">
+          <form [formGroup]="form" (ngSubmit)="onFormSubmit()" class="column needs-validation">
 
-      <div class="form-group">
-        <!-- <label for="licenseId">Licencia</label> -->
-        <input type="text" class="form-control" formControlName="license" aria-describedby="Licencia" required id="licenseId" placeholder="aaa-999" [class.is-invalid]="isInvalid('license')" />
-        <div class="invalid-feedback"
-          *ngIf="!form.controls.license.pristine && form.controls.license.status == 'INVALID'">
-          <p *ngIf="form.getError('required', 'license')"> *This field is required </p>
-          <p *ngIf="form.getError('licenseValidator', 'license')"> *Incorrect license format </p>
-          <p *ngIf="form.getError('minlength', 'license')"> *Invalid license </p>
+            <div class="form-group">
+              <!-- <label for="licenseId">Licencia</label> -->
+              <input type="text" class="form-control" formControlName="license" aria-describedby="Licencia" required
+                id="licenseId" placeholder="aaa-999" [class.is-invalid]="isInvalid('license')" />
+              <div class="invalid-feedback"
+                *ngIf="!form.controls.license.pristine && form.controls.license.status == 'INVALID'">
+                <p *ngIf="form.getError('required', 'license')"> *Este campo es requerido </p>
+                <p *ngIf="form.getError('licenseValidator', 'license') || form.getError('minlength', 'license')"> *Formato incorrecto de la placa</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <!-- <label for="dateId">Fecha</label> -->
+              <input type="string" class="form-control" formControlName="date" required aria-describedby="Fecha"
+                id="dateId" placeholder="dd/mm/aa" [class.is-invalid]="isInvalid('date')" />
+              <div class="invalid-feedback"
+                *ngIf="!form.controls.date.pristine && form.controls.date.status == 'INVALID'">
+                <p *ngIf="form.getError('required', 'date')"> *Este campo es requerido </p>
+                <p *ngIf="form.getError('dateValidator', 'date')"> *Formato incorrecto de la fecha </p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <!-- <label for="timeId">Hora</label> -->
+              <input type="text" class="form-control" formControlName="time" required aria-describedby="Hora"
+                id="timeId" placeholder="15:00" [class.is-invalid]="isInvalid('time')" />
+              <div class="invalid-feedback"
+                *ngIf="!form.controls.time.pristine && form.controls.time.status == 'INVALID'">
+                <p *ngIf="form.getError('required', 'time')"> *Este campo es requerido </p>
+                <p *ngIf="form.getError('timeValidator', 'time')"> *Formato incorrecto de la hora </p>
+              </div>
+            </div>
+            <div class="">
+              <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Revisar</button>
+            </div>
+          </form>
         </div>
       </div>
 
-      <div class="form-group">
-        <!-- <label for="dateId">Fecha</label> -->
-        <input type="string" class="form-control" formControlName="date" required aria-describedby="Fecha" id="dateId"
-          placeholder="dd/mm/aa" [class.is-invalid]="isInvalid('date')" />
-        <div class="invalid-feedback" *ngIf="!form.controls.date.pristine && form.controls.date.status == 'INVALID'">
-          <p *ngIf="form.getError('required', 'date')"> *This field is required </p>
-          <p *ngIf="form.getError('dateValidator', 'date')"> *Incorrect date format </p>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <!-- <label for="timeId">Hora</label> -->
-        <input type="text" class="form-control" formControlName="time" required aria-describedby="Hora" id="timeId"
-          placeholder="15:00" [class.is-invalid]="isInvalid('time')" />
-        <div class="invalid-feedback" *ngIf="!form.controls.time.pristine && form.controls.time.status == 'INVALID'">
-          <p *ngIf="form.getError('required', 'time')"> *This field is required </p>
-          <p *ngIf="form.getError('timeValidator', 'time')"> *Incorrect time format </p>
-        </div>
-      </div>
-
-      <div class="">
-        <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Submit</button>
-      </div>
-    </form>
+      <ul class="list-group">
+        <li *ngFor="let item of list" class="list-group-item" [class.text-success]="item.canCirculate">La placa {{item.license}} {{item.canCirculate? 'SI':'NO'}} puede circular el {{item.date}} a las {{item.time}} horas.</li>
+      </ul>
+    </div>
   </div>
 </div>
